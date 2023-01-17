@@ -1,0 +1,1 @@
+./bin/flowmo ./bin/test.fm
