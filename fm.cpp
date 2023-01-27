@@ -2,6 +2,7 @@
 #include<fstream>
 #include<vector>
 #include<string>
+// #include<cstdlib>
 using namespace std;
 
 vector<string> split(const string& str, char delimiter) {
@@ -20,7 +21,9 @@ vector<string> split(const string& str, char delimiter) {
 int main(int argc, char* argv[]) {
         // argv[i];
         int p = 0;
+        int s = 0;
         string line;
+        string sy = "";
         ifstream myfile(argv[1]);
 
         if (myfile.is_open()) {
@@ -28,10 +31,24 @@ int main(int argc, char* argv[]) {
             // Split text
                 vector<string> ln1 = split(line, ' ');
                 for (const auto& element : ln1) {
-                        if (p==0){
-                                if (element == "-print")
+                                if (s==1)
                                 {
-                                        p=1;
+                                        if (element == ";")
+                                        {
+                                                s=0;
+                                                system(sy.c_str());                                                                                                sy="";                                                                                                     }
+                                        else                                                                                                               {
+                                        sy+=element+" ";
+                                        }
+
+                                }
+                        if (p==0)
+                        {
+                                if (element == "-print")
+                                {                                                                                                                           p=1;                                                                                                       }
+                                else if (element == "-exec")
+                                {
+                                        s=1;
                                 }
                         }
                         else if (p==1)
@@ -44,18 +61,19 @@ int main(int argc, char* argv[]) {
                                 else if (element == ";;")
                                 {
                                         p = 0;
+                                        cout.flush();
+
                                 }
                                 else
                                 {
                                         cout << element << " ";
                                 }
                         }
-
                 }
         }
         myfile.close();
         } else {
-        cout << "Unable to open file" << endl;
+        cout << "File not openable." << endl;
         }
 
 
