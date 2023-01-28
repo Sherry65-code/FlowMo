@@ -2,7 +2,7 @@
 #include<fstream>
 #include<vector>
 #include<string>
-// #include<cstdlib>
+#include<unistd.h>
 using namespace std;
 
 vector<string> split(const string& str, char delimiter) {
@@ -22,6 +22,7 @@ int main(int argc, char* argv[]) {
         // argv[i];
         int p = 0;
         int s = 0;
+        int sl = 0;
         string line;
         string sy = "";
         ifstream myfile(argv[1]);
@@ -42,6 +43,17 @@ int main(int argc, char* argv[]) {
                                         }
 
                                 }
+                                if (sl==1)
+                                {
+                                        if (element == ";")
+                                        {
+                                                sl=0;
+                                        }
+                                        else
+                                        {
+                                        sleep(stoi(element));
+                                        }
+                                }
                         if (p==0)
                         {
                                 if (element == "-print")
@@ -49,6 +61,10 @@ int main(int argc, char* argv[]) {
                                 else if (element == "-exec")
                                 {
                                         s=1;
+                                }
+                                else if (element == "-sleep")
+                                {
+                                        sl=1;
                                 }
                         }
                         else if (p==1)
@@ -66,7 +82,14 @@ int main(int argc, char* argv[]) {
                                 }
                                 else
                                 {
+                                        if (element == "\\n")
+                                        {
+                                                cout << endl;
+                                        }
+                                        else
+                                        {
                                         cout << element << " ";
+                                        }
                                 }
                         }
                 }
